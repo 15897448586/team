@@ -14,6 +14,11 @@ public class UserServiceTest {
     @Resource
     private UserService userService;
 
+//    @Test
+//    void testLogin(){
+//        userService.userLogin("admin","200424zlx",null).
+//    }
+
     @Test
     void testSearchUsersByTags(){
         List<String> tags = Arrays.asList("java", "c");
