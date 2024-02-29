@@ -220,6 +220,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         }).map(this::getSafetyUser).collect(Collectors.toList());
     }
 
+    @Override
     public List<User> searchUsersBySQL(List<String> tags) {
         if (CollectionUtils.isEmpty(tags)) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);

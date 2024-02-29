@@ -11,10 +11,12 @@ import com.zlx.team.model.domain.request.UserRegisterRequest;
 import com.zlx.team.service.UserService;
 import com.zlx.team.contant.UserConstant;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -122,6 +124,15 @@ public class UserController {
         List<User> userList = userService.list(queryWrapper);
         List<User> list = userList.stream().map(user -> userService.getSafetyUser(user)).collect(Collectors.toList());
         return ResultUtils.success(list);
+    }
+
+    @PostMapping("/search/tags")
+    public BaseResponse<List<User>> searchUsersByTags(@RequestBody List<String> tags) {
+        if (CollectionUtils.isEmpty(tags)) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        List<User> userList = userService.searchUsersBySQL(tags);
+        return ResultUtils.success(userList);
     }
 
     @PostMapping("/delete")
